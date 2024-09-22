@@ -28,6 +28,9 @@ public class Avion {
     private Proprietaire proprietaire;
 
 
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private TypeAvion TypeAvion;
+
     public String getImmatriculation() {
         return immatriculation;
     }
@@ -50,6 +53,15 @@ public class Avion {
 
     public void setProprietaire(Proprietaire proprietaire) {
         this.proprietaire = proprietaire;
+    }
+
+
+    public aeroport.entities.TypeAvion getTypeAvion() {
+        return TypeAvion;
+    }
+
+    public void setTypeAvion(aeroport.entities.TypeAvion typeAvion) {
+        TypeAvion = typeAvion;
     }
 
     @Override
