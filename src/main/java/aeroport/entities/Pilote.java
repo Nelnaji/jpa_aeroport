@@ -1,24 +1,26 @@
 package aeroport.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 
+import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Pilote extends Personne{
+public class Pilote extends Personne {
 
-@Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 15)
     private String brevet;
 
     public Pilote() {
+        this.typeAvion = new HashSet<TypeAvion>();
     }
 
     public Pilote(String nom, int tel, Adresse adresse, String brevet) {
         super(nom, tel, adresse);
         this.brevet = brevet;
+
     }
 
     public String getBrevet() {
@@ -27,6 +29,23 @@ public class Pilote extends Personne{
 
     public void setBrevet(String brevet) {
         this.brevet = brevet;
+    }
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<TypeAvion> typeAvion;
+
+
+
+    public Set<TypeAvion> getTypeAvion(){
+        return Set.copyOf(typeAvion);
+    }
+
+    public void addTypeAvion(TypeAvion typeAvion) {
+        this.typeAvion.add(typeAvion);
+    }
+
+    public void removeTypeAvion(TypeAvion typeAvion) {
+        this.typeAvion.remove(typeAvion);
     }
 
     @Override
